@@ -36,6 +36,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url('main/list') ?>"><i class="fa fa-th-list"></i> List</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('main/create_mhs') ?>"><i class="fa fa-plus-square"></i> Add New Mahasiswa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('main/list_mhs') ?>"><i class="fa fa-th-list"></i> List Mahasiswa</a>
+                    </li>
                 </ul>
             </div>
             <a href="https://sourcecodester.com" target="_blank" class="text-light fw-bold text-decoration-none">SourceCodester</a>

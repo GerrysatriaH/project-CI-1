@@ -1,9 +1,10 @@
 <?php
  
 namespace App\Controllers;
- 
+
 use App\Models\CrudModel;
- 
+use App\Models\MahasiswaModel;
+
 class Main extends BaseController
 {
     // Session
@@ -12,10 +13,12 @@ class Main extends BaseController
     protected $data;
     // Model
     protected $crud_model;
+    protected $mahasiswa_model;
  
     // Initialize Objects
     public function __construct(){
         $this->crud_model = new CrudModel();
+        $this->mahasiswa_model = new MahasiswaModel();
         $this->session= \Config\Services::session();
         $this->data['session'] = $this->session;
     }
@@ -116,5 +119,102 @@ class Main extends BaseController
         echo view('crud/view', $this->data);
         echo view('templates/footer');
     }
+
+    //--------------------------------------------------------Mahasiswa---------------------------------------------------------------------//
+    // Home Page
+    public function mhs(){
+        $this->data['page_title'] = "Home Page";
+        echo view('templates/header', $this->data);
+        echo view('mahasiswa/home', $this->data);
+        echo view('templates/footer');
+    }
+
+    // Create Form Page
+    public function create_mhs(){
+        $this->data['page_title'] = "Add New Mahasiswa";
+        $this->data['request'] = $this->request;
+        echo view('templates/header', $this->data);
+        echo view('mahasiswa/create', $this->data);
+        echo view('templates/footer');
+    }
+
+    public function save_mhs(){
+        $this->data['request'] = $this->request;
+        $post = [
+            'nim' => $this->request->getPost('nim'),
+            'nama' => $this->request->getPost('nama'),
+            'jk' => $this->request->getPost('jk'),
+            'tempat_lahir' => $this->request->getPost('tempat_lahir'),
+            'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
+            'alamat' => $this->request->getPost('alamat'),
+            'no_tlp' => $this->request->getPost('no_tlp')
+        ];
+        if(!empty($this->request->getPost('id')))
+            $save = $this->mahasiswa_model->where(['id'=>$this->request->getPost('id')])->set($post)->update();
+        else
+            $save = $this->mahasiswa_model->insert($post);
+        if($save){
+            if(!empty($this->request->getPost('id')))
+            $this->session->setFlashdata('success_message','Data has been updated successfully') ;
+            else
+            $this->session->setFlashdata('success_message','Data has been added successfully') ;
+            $id =!empty($this->request->getPost('id')) ? $this->request->getPost('id') : $save;
+            return redirect()->to('/main/view_details_mhs/'.$id);
+        }else{
+            echo view('templates/header', $this->data);
+            echo view('mahasiswa/create', $this->data);
+            echo view('templates/footer');
+        }
+    }
+
+    // List Page
+    public function list_mhs(){
+        $this->data['page_title'] = "List Mahasiswa";
+        $this->data['list'] = $this->mahasiswa_model->orderBy('date(date_created) ASC')->select('*')->get()->getResult();
+        echo view('templates/header', $this->data);
+        echo view('mahasiswa/list', $this->data);
+        echo view('templates/footer');
+    }
+
+    // Edit Form Page
+    public function edit_mhs($id=''){
+        if(empty($id)){
+            $this->session->setFlashdata('error_message','Unknown Data ID.') ;
+            return redirect()->to('/main/list_mhs');
+        }
+        $this->data['page_title'] = "Edit Mahasiswa Data";
+        $qry= $this->mahasiswa_model->select('*')->where(['id'=>$id]);
+        $this->data['data'] = $qry->first();
+        echo view('templates/header', $this->data);
+        echo view('mahasiswa/edit', $this->data);
+        echo view('templates/footer');
+    }
  
+    // Delete Data
+    public function delete_mhs($id=''){
+        if(empty($id)){
+            $this->session->setFlashdata('error_message','Unknown Data ID.') ;
+            return redirect()->to('/main/list_mhs');
+        }
+        $delete = $this->mahasiswa_model->delete($id);
+        if($delete){
+            $this->session->setFlashdata('success_message','Mahasiswa Details has been deleted successfully.') ;
+            return redirect()->to('/main/list_mhs');
+        }
+    }
+
+     // View Data
+     public function view_details_mhs($id=''){
+        if(empty($id)){
+            $this->session->setFlashdata('error_message','Unknown Data ID.') ;
+            return redirect()->to('/main/list_mhs');
+        }
+        $this->data['page_title'] = "View Mahasiswa Details";
+        $qry= $this->mahasiswa_model->select("*")->where(['id'=>$id]);
+        $this->data['data'] = $qry->first();
+        echo view('templates/header', $this->data);
+        echo view('mahasiswa/view', $this->data);
+        echo view('templates/footer');
+    }
+    //--------------------------------------------------------------------------------------------------------------------------------------//
 }
