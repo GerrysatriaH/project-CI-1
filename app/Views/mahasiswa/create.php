@@ -22,6 +22,15 @@
                         <option <?= !empty($request->getPost('jk')) && $request->getPost('jk') == 'Perempuan' ? 'selected' : '' ?>>Perempuan</option>
                     </select>
                 </div>
+                <div class="mb-3 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <label for="jp" class="control-label">Jenjang Pendidikan</label>
+                    <select name="jp" id="jp" class="form-select form-select-border">
+                        <option value="">Pilih Jenjang Pendidikan</option>
+                        <?php foreach($jp as $jps){?>
+                            <option value="<?php echo $jps->id; ?>"><?php echo $jps->jp; ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <label for="tempat_lahir" class="control-label">Tempat Lahir</label>
                     <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" required="required" value="<?= !empty($request->getPost('tempat_lahir')) ? $request->getPost('tempat_lahir') : '' ?>">

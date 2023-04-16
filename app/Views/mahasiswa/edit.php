@@ -22,6 +22,14 @@
                         <option <?= isset($data['jk']) && $data['jk'] == 'Perempuan' ? 'selected' : '' ?>>Perempuan</option>
                     </select>
                 </div>
+                <div class="mb-3 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <label for="jp" class="control-label">Jenjang Pendidikan</label>
+                    <select name="jp" id="jp" class="form-select form-select-border">
+                        <?php foreach ($jp as $jps => $value) : ?>
+                            <option value="<?= $jps['id']; ?>" <?= isset($jps['id']) && $jps['id'] == $jps['jp'] ? 'selected' : ''; ?>><?= $jps['jp']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <label for="tempat_lahir" class="control-label">Tempat Lahir</label>
                     <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" required="required" value="<?= isset($data['tempat_lahir']) ? $data['tempat_lahir'] : '' ?>">

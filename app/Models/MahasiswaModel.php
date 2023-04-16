@@ -9,5 +9,5 @@ class MahasiswaModel extends Model
     // Table
     protected $table = 'mahasiswa';
     // allowed fields to manage
-    protected $allowedFields = ['nim', 'nama','jk', 'tempat_lahir', 'tanggal_lahir', 'alamat', 'no_tlp'];
+    protected $allowedFields = ['nim', 'nama','jk','tempat_lahir', 'tanggal_lahir', 'alamat', 'no_tlp', 'id_jp'];
 }

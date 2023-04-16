@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\CrudModel;
 use App\Models\MahasiswaModel;
+use App\Models\JpModel;
 
 class Main extends BaseController
 {
@@ -14,11 +15,13 @@ class Main extends BaseController
     // Model
     protected $crud_model;
     protected $mahasiswa_model;
+    protected $jp_model;
  
     // Initialize Objects
     public function __construct(){
         $this->crud_model = new CrudModel();
         $this->mahasiswa_model = new MahasiswaModel();
+        $this->jp_model = new JpModel();
         $this->session= \Config\Services::session();
         $this->data['session'] = $this->session;
     }
@@ -26,6 +29,7 @@ class Main extends BaseController
     // Home Page
     public function index(){
         $this->data['page_title'] = "Home Page";
+
         echo view('templates/header', $this->data);
         echo view('crud/home', $this->data);
         echo view('templates/footer');
@@ -35,6 +39,7 @@ class Main extends BaseController
     public function create(){
         $this->data['page_title'] = "Add New";
         $this->data['request'] = $this->request;
+
         echo view('templates/header', $this->data);
         echo view('crud/create', $this->data);
         echo view('templates/footer');
@@ -74,6 +79,7 @@ class Main extends BaseController
     public function list(){
         $this->data['page_title'] = "List of Contacts";
         $this->data['list'] = $this->crud_model->orderBy('date(date_created) ASC')->select('*')->get()->getResult();
+
         echo view('templates/header', $this->data);
         echo view('crud/list', $this->data);
         echo view('templates/footer');
@@ -88,6 +94,7 @@ class Main extends BaseController
         $this->data['page_title'] = "Edit Contact Details";
         $qry= $this->crud_model->select('*')->where(['id'=>$id]);
         $this->data['data'] = $qry->first();
+
         echo view('templates/header', $this->data);
         echo view('crud/edit', $this->data);
         echo view('templates/footer');
@@ -115,6 +122,7 @@ class Main extends BaseController
         $this->data['page_title'] = "View Contact Details";
         $qry= $this->crud_model->select("*, CONCAT(lastname,', ',firstname,COALESCE(concat(' ', middlename), '')) as `name`")->where(['id'=>$id]);
         $this->data['data'] = $qry->first();
+
         echo view('templates/header', $this->data);
         echo view('crud/view', $this->data);
         echo view('templates/footer');
@@ -124,6 +132,7 @@ class Main extends BaseController
     // Home Page
     public function mhs(){
         $this->data['page_title'] = "Home Page";
+
         echo view('templates/header', $this->data);
         echo view('mahasiswa/home', $this->data);
         echo view('templates/footer');
@@ -133,6 +142,8 @@ class Main extends BaseController
     public function create_mhs(){
         $this->data['page_title'] = "Add New Mahasiswa";
         $this->data['request'] = $this->request;
+        $this->data['jp'] = $this->jp_model->orderBy('id ASC')->select('*')->get()->getResult();
+
         echo view('templates/header', $this->data);
         echo view('mahasiswa/create', $this->data);
         echo view('templates/footer');
@@ -144,6 +155,7 @@ class Main extends BaseController
             'nim' => $this->request->getPost('nim'),
             'nama' => $this->request->getPost('nama'),
             'jk' => $this->request->getPost('jk'),
+            'id_jp' => $this->request->getPost('jp'),
             'tempat_lahir' => $this->request->getPost('tempat_lahir'),
             'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
             'alamat' => $this->request->getPost('alamat'),
@@ -171,6 +183,7 @@ class Main extends BaseController
     public function list_mhs(){
         $this->data['page_title'] = "List Mahasiswa";
         $this->data['list'] = $this->mahasiswa_model->orderBy('date(date_created) ASC')->select('*')->get()->getResult();
+
         echo view('templates/header', $this->data);
         echo view('mahasiswa/list', $this->data);
         echo view('templates/footer');
@@ -185,6 +198,7 @@ class Main extends BaseController
         $this->data['page_title'] = "Edit Mahasiswa Data";
         $qry= $this->mahasiswa_model->select('*')->where(['id'=>$id]);
         $this->data['data'] = $qry->first();
+
         echo view('templates/header', $this->data);
         echo view('mahasiswa/edit', $this->data);
         echo view('templates/footer');
@@ -203,15 +217,16 @@ class Main extends BaseController
         }
     }
 
-     // View Data
-     public function view_details_mhs($id=''){
+    // View Data
+    public function view_details_mhs($id=''){
         if(empty($id)){
             $this->session->setFlashdata('error_message','Unknown Data ID.') ;
             return redirect()->to('/main/list_mhs');
         }
         $this->data['page_title'] = "View Mahasiswa Details";
-        $qry= $this->mahasiswa_model->select("*")->where(['id'=>$id]);
+        $qry= $this->mahasiswa_model->select('*')->where(['id'=>$id]);
         $this->data['data'] = $qry->first();
+
         echo view('templates/header', $this->data);
         echo view('mahasiswa/view', $this->data);
         echo view('templates/footer');

@@ -11,6 +11,8 @@
                 <dd class="ps-4"><?= isset($data['nama']) ? $data['nama'] : '' ?></dd>
                 <dt class="text-muted">Jenis Kelamin</dt>
                 <dd class="ps-4"><?= isset($data['jk']) ? $data['jk'] : '' ?></dd>
+                <dt class="text-muted">Jenjang Pendidikan</dt>
+                <dd class="ps-4"><?= isset($data['id_jp']) ? $data['id_jp'] : '' ?></dd>
                 <dt class="text-muted">Tempat Lahir</dt>
                 <dd class="ps-4"><?= isset($data['tempat_lahir']) ? $data['tempat_lahir'] : '' ?></dd>
                 <dt class="text-muted">Tanggal Lahir</dt>
