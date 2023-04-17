@@ -4,7 +4,7 @@
     </div>
     <div class="card-body">
         <div class="container-fluid">
-            <dl>
+            <dl>          
                 <dt class="text-muted">Nim</dt>
                 <dd class="ps-4"><?= isset($data['nim']) ? $data['nim'] : '' ?></dd>
                 <dt class="text-muted">Nama</dt>
@@ -12,7 +12,7 @@
                 <dt class="text-muted">Jenis Kelamin</dt>
                 <dd class="ps-4"><?= isset($data['jk']) ? $data['jk'] : '' ?></dd>
                 <dt class="text-muted">Jenjang Pendidikan</dt>
-                <dd class="ps-4"><?= isset($data['id_jp']) ? $data['id_jp'] : '' ?></dd>
+                <dd class="ps-4"><?= isset($data['jp']) ? $data['jp'] : '' ?></dd>
                 <dt class="text-muted">Tempat Lahir</dt>
                 <dd class="ps-4"><?= isset($data['tempat_lahir']) ? $data['tempat_lahir'] : '' ?></dd>
                 <dt class="text-muted">Tanggal Lahir</dt>
@@ -21,6 +21,7 @@
                 <dd class="ps-4"><?= isset($data['alamat']) ? $data['alamat'] : '' ?></dd>
                 <dt class="text-muted">No HP</dt>
                 <dd class="ps-4"><?= isset($data['no_tlp']) ? $data['no_tlp'] : '' ?></dd>
+                
             </dl>
         </div>
     </div>

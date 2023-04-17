@@ -224,7 +224,15 @@ class Main extends BaseController
             return redirect()->to('/main/list_mhs');
         }
         $this->data['page_title'] = "View Mahasiswa Details";
-        $qry= $this->mahasiswa_model->select('*')->where(['id'=>$id]);
+        $qry= $this->mahasiswa_model
+              ->select('mahasiswa.id, mahasiswa.nim, 
+                        mahasiswa.nama, mahasiswa.jk, 
+                        mahasiswa.tempat_lahir, mahasiswa.tanggal_lahir, 
+                        mahasiswa.alamat, mahasiswa.no_tlp, 
+                        jp.jp')
+               ->join('jp', 'jp.id = mahasiswa.id_jp')
+               ->where(['mahasiswa.id' => $id]);
+
         $this->data['data'] = $qry->first();
 
         echo view('templates/header', $this->data);
