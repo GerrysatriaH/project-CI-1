@@ -198,6 +198,7 @@ class Main extends BaseController
         $this->data['page_title'] = "Edit Mahasiswa Data";
         $qry= $this->mahasiswa_model->select('*')->where(['id'=>$id]);
         $this->data['data'] = $qry->first();
+        $this->data['jp'] = $this->jp_model->orderBy('id ASC')->select('*')->get()->getResult();
 
         echo view('templates/header', $this->data);
         echo view('mahasiswa/edit', $this->data);
