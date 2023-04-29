@@ -129,14 +129,6 @@ class Main extends BaseController
     }
 
     //--------------------------------------------------------Mahasiswa---------------------------------------------------------------------//
-    // Home Page
-    public function mhs(){
-        $this->data['page_title'] = "Home Page";
-
-        echo view('templates/header', $this->data);
-        echo view('mahasiswa/home', $this->data);
-        echo view('templates/footer');
-    }
 
     // Create Form Page
     public function create_mhs(){
