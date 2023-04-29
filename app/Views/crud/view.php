@@ -9,7 +9,7 @@
                 <dd class="ps-4"><?= isset($data['name']) ? $data['name'] : '' ?></dd>
                 <dt class="text-muted">Gender</dt>
                 <dd class="ps-4"><?= isset($data['gender']) ? $data['gender'] : '' ?></dd>
-                <dt class="text-muted">Contact #</dt>
+                <dt class="text-muted">Contact</dt>
                 <dd class="ps-4"><?= isset($data['contact']) ? $data['contact'] : '' ?></dd>
                 <dt class="text-muted">Email</dt>
                 <dd class="ps-4"><?= isset($data['email']) ? $data['email'] : '' ?></dd>
