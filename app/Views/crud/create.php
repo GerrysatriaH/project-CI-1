@@ -6,9 +6,9 @@
         <div class="contianer-fluid">
             <form action="<?= base_url('main/save') ?>" method="POST" id="create-form">
                 <input type="hidden" name="id">
- 
+
                 <div class="mb-3">
-                    <label for="" class="control-label">Fullname (first name, middle name, last name)</label>
+                    <label for="nama" class="control-label">Fullname (first name, middle name, last name)</label>
                     <div class="input-group">
                         <input type="text" autofocus class="form-control form-control-border" id="firstname" name="firstname" value="<?= !empty($request->getPost('firstname')) ? $request->getPost('firstname') : '' ?>" required="required" placeholder="First Name">
                         <input type="text" class="form-control form-control-border" id="middlename" name="middlename" value="<?= !empty($request->getPost('middlename')) ? $request->getPost('middlename') : '' ?>" required="false" placeholder="Middle Name (optional)">

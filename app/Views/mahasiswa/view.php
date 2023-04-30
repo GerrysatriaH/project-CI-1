@@ -13,6 +13,8 @@
                 <dd class="ps-4"><?= isset($data['jk']) ? $data['jk'] : '' ?></dd>
                 <dt class="text-muted">Jenjang Pendidikan</dt>
                 <dd class="ps-4"><?= isset($data['jp']) ? $data['jp'] : '' ?></dd>
+                <dt class="text-muted">Status Perkawinan</dt>
+                <dd class="ps-4"><?= isset($data['status_perkawinan']) ? $data['status_perkawinan'] : '' ?></dd>
                 <dt class="text-muted">Tempat Lahir</dt>
                 <dd class="ps-4"><?= isset($data['tempat_lahir']) ? $data['tempat_lahir'] : '' ?></dd>
                 <dt class="text-muted">Tanggal Lahir</dt>

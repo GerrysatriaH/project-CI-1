@@ -28,10 +28,13 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link text-white" aria-current="page" href="<?= base_url('main/list_mhs') ?>"><i class="fa-solid fa-house"></i> Home</a>
+                        <a class="nav-link text-white" aria-current="page" href="<?= base_url() ?>"><i class="fa-solid fa-house"></i> Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="<?= base_url('main/list') ?>"><i class="fa fa-th-list"></i> Contact</a>
+                        <a class="nav-link text-white" aria-current="page" href="<?= base_url('main/list_mhs') ?>"><i class="fa-solid fa-person"></i> Mahasiswa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="<?= base_url('main/list') ?>"><i class="fa fa-th-list"></i>  Contact</a>
                     </li>
                 </ul>
             </div>

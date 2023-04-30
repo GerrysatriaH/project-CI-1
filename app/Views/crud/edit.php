@@ -1,4 +1,4 @@
-<div class="card card-primary rounded-0">
+<div class="card card-primary rounded-2">
     <div class="card-header">
         <h4 class="text-muted"><i class="far fa-edit"></i> Edit Contact Details</h4>
     </div>

@@ -37,14 +37,10 @@
                 <!-- Status Perkawinan Mahasiswa -->
                 <div class="mb-3 col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <p class="fw-bold pb-2">Status Perkawinan</p>
-                    <input class="form-check-input" type="radio" name="status_perkawinan" id="">
-                    <label class="form-check-label me-2">Belum Kawin</label>
-                    <input class="form-check-input" type="radio" name="status_perkawinan" id="">
-                    <label class="form-check-label me-2">Kawin</label>
-                    <input class="form-check-input" type="radio" name="status_perkawinan" id="">
-                    <label class="form-check-label me-2">Cerai Hidup</label>
-                    <input class="form-check-input" type="radio" name="status_perkawinan" id="">
-                    <label class="form-check-label me-2">Cerai Mati</label>
+                    <?php foreach($status_kawin as $sk) { ?>
+                        <input class="form-check-input" type="radio" name="status_perkawinan" value="<?= $sk->id?>" <?= isset($data['id_status_kawin']) && $data['id_status_kawin'] == $sk->id ? 'checked' : ''; ?>>
+                        <label class="form-check-label me-2"><?= $sk->status_perkawinan?></label>
+                    <?php } ?>
                 </div>
                 <!-- Tempat Lahir Mahasiswa -->
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">

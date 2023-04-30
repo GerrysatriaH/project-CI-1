@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\CrudModel;
 use App\Models\MahasiswaModel;
 use App\Models\JpModel;
+use App\Models\StatusKawinModel;
 
 class Main extends BaseController
 {
@@ -16,12 +17,16 @@ class Main extends BaseController
     protected $crud_model;
     protected $mahasiswa_model;
     protected $jp_model;
+    protected $status_kawin_model;
  
     // Initialize Objects
     public function __construct(){
+
         $this->crud_model = new CrudModel();
         $this->mahasiswa_model = new MahasiswaModel();
         $this->jp_model = new JpModel();
+        $this->status_kawin_model = new StatusKawinModel();
+
         $this->session= \Config\Services::session();
         $this->data['session'] = $this->session;
     }
@@ -29,6 +34,9 @@ class Main extends BaseController
     // Home Page
     public function index(){
         $this->data['page_title'] = "Home Page";
+
+        $this->data['list'] = $this->crud_model->orderBy('date(date_created) ASC')->select('*')->get()->getResult();
+        $this->data['list_mhs'] = $this->mahasiswa_model->orderBy('date(date_created) ASC')->select('*')->get()->getResult();
 
         echo view('templates/header', $this->data);
         echo view('crud/home', $this->data);
@@ -133,8 +141,10 @@ class Main extends BaseController
     // Create Form Page
     public function create_mhs(){
         $this->data['page_title'] = "Add New Mahasiswa";
+
         $this->data['request'] = $this->request;
         $this->data['jp'] = $this->jp_model->orderBy('id ASC')->select('*')->get()->getResult();
+        $this->data['status_kawin'] = $this->status_kawin_model->orderBy('id ASC')->select('*')->get()->getResult();
 
         echo view('templates/header', $this->data);
         echo view('mahasiswa/create', $this->data);
@@ -148,6 +158,7 @@ class Main extends BaseController
             'nama' => $this->request->getPost('nama'),
             'jk' => $this->request->getPost('jk'),
             'id_jp' => $this->request->getPost('jp'),
+            'id_status_kawin' => $this->request->getPost('id_status_kawin'),
             'tempat_lahir' => $this->request->getPost('tempat_lahir'),
             'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
             'alamat' => $this->request->getPost('alamat'),
@@ -188,9 +199,10 @@ class Main extends BaseController
             return redirect()->to('/main/list_mhs');
         }
         $this->data['page_title'] = "Edit Mahasiswa Data";
-        $qry= $this->mahasiswa_model->select('*')->where(['id'=>$id]);
-        $this->data['data'] = $qry->first();
+
+        $this->data['data'] = $this->mahasiswa_model->select('*')->where(['id'=>$id])->first();
         $this->data['jp'] = $this->jp_model->orderBy('id ASC')->select('*')->get()->getResult();
+        $this->data['status_kawin'] = $this->status_kawin_model->orderBy('id ASC')->select('*')->get()->getResult();
 
         echo view('templates/header', $this->data);
         echo view('mahasiswa/edit', $this->data);
@@ -222,8 +234,9 @@ class Main extends BaseController
                         mahasiswa.nama, mahasiswa.jk, 
                         mahasiswa.tempat_lahir, mahasiswa.tanggal_lahir, 
                         mahasiswa.alamat, mahasiswa.no_tlp, 
-                        jp.jp')
+                        jp.jp, status_perkawinan.status_perkawinan')
                ->join('jp', 'jp.id = mahasiswa.id_jp')
+               ->join('status_perkawinan', 'status_perkawinan.id = mahasiswa.id_status_kawin')
                ->where(['mahasiswa.id' => $id]);
 
         $this->data['data'] = $qry->first();
