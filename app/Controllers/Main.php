@@ -11,8 +11,10 @@ class Main extends BaseController
 {
     // Session
     protected $session;
+
     // Data
     protected $data;
+
     // Model
     protected $crud_model;
     protected $mahasiswa_model;
@@ -42,7 +44,7 @@ class Main extends BaseController
         echo view('crud/home', $this->data);
         echo view('templates/footer');
     }
- 
+
     // Create Form Page
     public function create(){
         $this->data['page_title'] = "Add New";
@@ -158,22 +160,24 @@ class Main extends BaseController
             'nama' => $this->request->getPost('nama'),
             'jk' => $this->request->getPost('jk'),
             'id_jp' => $this->request->getPost('jp'),
-            'id_status_kawin' => $this->request->getPost('id_status_kawin'),
+            'id_status_kawin' => $this->request->getPost('status_perkawinan'),
             'tempat_lahir' => $this->request->getPost('tempat_lahir'),
             'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
             'alamat' => $this->request->getPost('alamat'),
             'no_tlp' => $this->request->getPost('no_tlp')
         ];
-        if(!empty($this->request->getPost('id')))
+        if(!empty($this->request->getPost('id'))){
             $save = $this->mahasiswa_model->where(['id'=>$this->request->getPost('id')])->set($post)->update();
-        else
+        }
+        else{
             $save = $this->mahasiswa_model->insert($post);
+        }
         if($save){
             if(!empty($this->request->getPost('id')))
-            $this->session->setFlashdata('success_message','Data has been updated successfully') ;
-            else
-            $this->session->setFlashdata('success_message','Data has been added successfully') ;
-            $id =!empty($this->request->getPost('id')) ? $this->request->getPost('id') : $save;
+                $this->session->setFlashdata('success_message','Data has been updated successfully') ;
+            else 
+                $this->session->setFlashdata('success_message','Data has been added successfully') ;
+                $id =!empty($this->request->getPost('id')) ? $this->request->getPost('id') : $save;
             return redirect()->to('/main/view_details_mhs/'.$id);
         }else{
             echo view('templates/header', $this->data);
