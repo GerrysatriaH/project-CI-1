@@ -6,6 +6,7 @@ use App\Models\CrudModel;
 use App\Models\MahasiswaModel;
 use App\Models\JpModel;
 use App\Models\StatusKawinModel;
+use Config\View;
 
 class Main extends BaseController
 {

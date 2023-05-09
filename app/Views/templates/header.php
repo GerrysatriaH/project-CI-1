@@ -22,7 +22,7 @@
     <!-- Top Navigation Bar -->
     <nav class="navbar navbar-dark navbar-expand-lg bg-secondary bg-gradient">
         <div class="container">
-            <a class="navbar-brand" href="<?= base_url() ?>">CI4 Simple CRUD</a>
+            <a class="navbar-brand" href="<?= base_url() ?>">CI SIMPLE CRUD</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -31,15 +31,23 @@
                     <li class="nav-item">
                         <a class="nav-link text-white" aria-current="page" href="<?= base_url() ?>"><i class="fa-solid fa-house"></i> Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" aria-current="page" href="<?= base_url('main/list_mhs') ?>"><i class="fa-solid fa-person"></i> Mahasiswa</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="<?= base_url('main/list') ?>"><i class="fa fa-th-list"></i>  Contact</a>
-                    </li>
+                    <?php if($session->has('logged_in') == TRUE){ ?>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" aria-current="page" href="<?= base_url('main/list_mhs') ?>"><i class="fa-solid fa-person"></i> Mahasiswa</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="<?= base_url('main/list') ?>"><i class="fa fa-th-list"></i>  Contact</a>
+                        </li>
+                    <?php } ?>
                 </ul>
-                <a href="<?= base_url('main/login') ?>" class="btn btn-success">Login</a>
             </div>
+            <ul class="navbar-nav">
+                <?php if($session->has('logged_in') == TRUE){ ?>
+                    <a href="<?= base_url()?>logout" class="btn btn-light fw-bold">Logout</a>
+                <?php } else { ?>
+                    <a href="<?= base_url()?>login" class="btn btn-light fw-bold">Login</a>
+                <?php } ?>
+            </ul>
         </div>
     </nav>
     <!--End Top Navigation Bar -->
@@ -49,7 +57,7 @@
         <!-- Main Container -->
         <div class="main container">
         <?php if(!empty($session->getFlashdata('success_message'))): ?>
-                <div class="alert alert-success rouded-0">
+                <div class="alert alert-success rounded-0">
                     <div class="d-flex">
                         <div class="col-11"><?= $session->getFlashdata('success_message') ?></div>
                         <div class="col-1 text-end"><a href="javascript:void(0)" onclick="$(this).closest('.alert').remove()" class="text-muted text-decoration-none"><i class="fa fa-times"></i></a></div>
@@ -57,7 +65,7 @@
                 </div>
         <?php endif ?>
         <?php if(!empty($session->getFlashdata('error_message'))): ?>
-                <div class="alert alert-danger rouded-0">
+                <div class="alert alert-danger rounded-0">
                     <div class="d-flex">
                         <div class="col-11"><?= $session->getFlashdata('error_message') ?></div>
                         <div class="col-1 text-end"><a href="javascript:void(0)" onclick="$(this).closest('.alert').remove()" class="text-muted text-decoration-none"><i class="fa fa-times"></i></a></div>
